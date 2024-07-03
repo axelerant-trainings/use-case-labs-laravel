@@ -6,6 +6,8 @@
   <li class="list-group-item"><a href="{{ route('categories.index') }}">Manage Categories</a></li>
   <li class="list-group-item"><a href="{{ route('suppliers.index') }}">Manage Suppliers</a></li>
   <li class="list-group-item"><a href="{{ route('products.index') }}">Manage Products</a></li>
-  <li class="list-group-item"><a href="{{ route('home') }}">Main Topics</a></li>
 </ul>
+<div class="mt-2">
+  <a href="{{ route('home') }}" class="btn btn-primary">Main Topics</a>
+</div>
 @endsection

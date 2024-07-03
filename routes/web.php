@@ -15,6 +15,7 @@ Route::prefix('topic')->group(function() {
          * route_name: topic.task2-crud
          */
         Route::view('/crud', 'topics.task2-crud')->name('task2-crud');
+        Route::view('/restapi', 'topics.task2-1-restapi')->name('task-2-1-restapi');
     });
     
     /**

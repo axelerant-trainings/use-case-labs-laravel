@@ -1,0 +1,670 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Use Case Labs - RESTful API documentation",
+        "description": "Task 2.1: Documentation for RESTful APIs.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of products.",
+                "description": "Return a Json array of product objects.",
+                "operationId": "816847c99722b76c6ac4993a8f0c580c",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Store a newly created product in storage.",
+                "description": "Store a newly created product in storage and return the product data.",
+                "operationId": "0c301689d4ebf25fd55b9b6b86a33d4b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreProductRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreProductResponseSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StoreProductResponseFailed"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/{product}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Display the specified product.",
+                "description": "Return an array of the specified product details.",
+                "operationId": "3260c3999eb508b1dbff657a3ca73f0d",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "The id of the product to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResponseSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResponseFailed"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update an existing product",
+                "description": "Return an array of the updated product details.",
+                "operationId": "a7f9588e6ffec1dbc4d2c51f0caaf905",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "The id of the product to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreProductRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateProductResponseSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateProductResponseFailed"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResponseFailed"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Remove the specified product from storage.",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "499c5806b26ff299db98a2616d76ba91",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "The id of the product to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteProductResponseSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResponseFailed"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "DeleteProductResponseSuccess": {
+                "title": "DeleteProductResponseSuccess",
+                "description": "Success response for delete product API.",
+                "type": "object",
+                "xml": {
+                    "name": "DeleteProductResponseSuccess"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreProductResponseSuccess"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "title": "message",
+                                "description": "A status message",
+                                "type": "string",
+                                "example": "Product deleted successfully."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "Category": {
+                "title": "Category",
+                "description": "A category model.",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Primary key of the model",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Category name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Beverages"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Category description",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Soft drinks, coffees, teas, beers, juices and ales"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Category"
+                }
+            },
+            "Product": {
+                "title": "Product",
+                "description": "A product model.",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Primary key of the model",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Product name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Chai"
+                    },
+                    "supplier_id": {
+                        "title": "Supplier ID",
+                        "description": "Supplier Id related to this product",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "supplier": {
+                        "$ref": "#/components/schemas/Supplier"
+                    },
+                    "category_id": {
+                        "title": "Category ID",
+                        "description": "Category Id related to this product",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/Category"
+                    },
+                    "unit": {
+                        "title": "Unit",
+                        "description": "Number of units",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 10
+                    },
+                    "price": {
+                        "title": "Price",
+                        "description": "Unit price of this product",
+                        "type": "number",
+                        "format": "double",
+                        "example": 100.25
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Product"
+                }
+            },
+            "Supplier": {
+                "title": "Supplier",
+                "description": "A supplier model.",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Primary key of the model",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Supplier name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Grandma Kelly's Homestead"
+                    },
+                    "contact_name": {
+                        "title": "Contact name",
+                        "description": "Contact name of this supplier",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Regina Murphy"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "description": "Supplier's street address",
+                        "type": "string",
+                        "format": "string",
+                        "example": "707 Oxford Rd."
+                    },
+                    "city": {
+                        "title": "City",
+                        "description": "Supplier's city",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Ann Arbor"
+                    },
+                    "postal_code": {
+                        "title": "Postal code",
+                        "description": "Supplier's postal/zip code",
+                        "type": "string",
+                        "format": "string",
+                        "example": "48104"
+                    },
+                    "country": {
+                        "title": "Country",
+                        "description": "Supplier's country",
+                        "type": "string",
+                        "format": "string",
+                        "example": "USA"
+                    },
+                    "phone": {
+                        "title": "Phone",
+                        "description": "Supplier's phone number",
+                        "type": "string",
+                        "format": "string",
+                        "example": "(313) 555-5735"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Supplier"
+                }
+            },
+            "ProductResource": {
+                "title": "ProductResource",
+                "description": "Product resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductResource"
+                }
+            },
+            "ProductResponseFailed": {
+                "title": "ProductResponseFailed",
+                "description": "Failed response for a product.",
+                "type": "object",
+                "xml": {
+                    "name": "ProductResponseFailed"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ProductResponseSuccess"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "title": "message",
+                                "description": "A status message",
+                                "type": "string",
+                                "example": "No query results for model [App\\Models\\Product] 100"
+                            },
+                            "data": {
+                                "title": "Data",
+                                "description": "List of validation errors",
+                                "example": null,
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "ProductResponseSuccess": {
+                "title": "ProductResponseSuccess",
+                "description": "Success response for a product.",
+                "properties": {
+                    "success": {
+                        "title": "success",
+                        "description": "Indicator whether the action succeeded or failed.",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "A status message",
+                        "type": "string",
+                        "example": "Product record fetched."
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Product"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductResponseSuccess"
+                }
+            },
+            "StoreProductRequest": {
+                "title": "StoreProductRequest",
+                "description": "Store Product request body data",
+                "required": [
+                    "name",
+                    "category_id",
+                    "supplier_id",
+                    "unit",
+                    "price"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new product",
+                        "type": "string",
+                        "example": "Chai"
+                    },
+                    "supplier_id": {
+                        "title": "supplier_id",
+                        "description": "ID of the supplier",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "category_id": {
+                        "title": "category_id",
+                        "description": "ID of the product category",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "unit": {
+                        "title": "unit",
+                        "description": "Number of units",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "price": {
+                        "title": "price",
+                        "description": "Unit price of the product",
+                        "type": "number",
+                        "format": "double",
+                        "example": 5.75
+                    }
+                },
+                "type": "object"
+            },
+            "StoreProductResponseFailed": {
+                "title": "StoreProductResponseFailed",
+                "description": "Failed response for store product API.",
+                "type": "object",
+                "xml": {
+                    "name": "StoreProductResponseFailed"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ProductResponseFailed"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "title": "message",
+                                "description": "A status message",
+                                "type": "string",
+                                "example": "Validation errors"
+                            },
+                            "data": {
+                                "title": "Data",
+                                "description": "List of validation errors",
+                                "type": "object",
+                                "example": {
+                                    "name": [
+                                        "The name has already been taken."
+                                    ],
+                                    "category_id": [
+                                        "The category id field must be an integer.",
+                                        "The category id field must be greater than 0."
+                                    ],
+                                    "supplier_id": [
+                                        "The selected supplier id is invalid."
+                                    ],
+                                    "price": [
+                                        "The price field must have 2 decimal places."
+                                    ]
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "StoreProductResponseSuccess": {
+                "title": "StoreProductResponseSuccess",
+                "description": "Success response for store product API.",
+                "type": "object",
+                "xml": {
+                    "name": "StoreProductResponseSuccess"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ProductResponseSuccess"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "title": "message",
+                                "description": "A status message",
+                                "type": "string",
+                                "example": "New product created."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "UpdateProductResponseFailed": {
+                "title": "UpdateProductResponseFailed",
+                "description": "Failed response for update product API.",
+                "xml": {
+                    "name": "UpdateProductResponseFailed"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreProductResponseFailed"
+                    }
+                ]
+            },
+            "UpdateProductResponseSuccess": {
+                "title": "UpdateProductResponseSuccess",
+                "description": "Success response for update product API.",
+                "type": "object",
+                "xml": {
+                    "name": "UpdateProductResponseSuccess"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreProductResponseSuccess"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "title": "message",
+                                "description": "A status message",
+                                "type": "string",
+                                "example": "Product updated successfully."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Products",
+            "description": "API Endpoints for Products"
+        }
+    ]
+}

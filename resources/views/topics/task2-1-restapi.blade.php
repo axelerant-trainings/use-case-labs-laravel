@@ -48,6 +48,11 @@
       </tr>
     </tbody>
   </table>
+  <p><a href="{{ route('l5-swagger.default.api') }}" target="_blank">Generated project documentation</a></p>
+  <strong>Resources:</strong>
+  <ul>
+    <li><a href="https://swagger.io/specification/" target="_blank">External Swagger Specification</a></li>
+  </ul>
 </div>
 <div class="mt-2">
   <a href="{{ route('home') }}" class="btn btn-primary">Main Topics</a>
